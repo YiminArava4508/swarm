@@ -10,3 +10,7 @@
 *.pdb
 *.o
 *.log
+
+# CMAKE stuff
+CMakeCache.txt
+cmake_install.cmake

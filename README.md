@@ -4,38 +4,39 @@ Minimal OpenGL starter that uses CMake and GLFW to open a window and clear the s
 
 ```
 swarm
-├── CMakeLists.txt
-├── cmake/
-│   └── Dependencies.cmake
 ├── include/
 │   └── .gitkeep
-├── shaders/
-│   ├── simple.frag
-│   └── simple.vert
+├── res/
+|   └── shaders/
+│       └── simple.frag
+│       └── simple.vert
 ├── src/
 │   └── main.cpp
+|   .gitignore
+├── CMakeLists.txt
 └── README.md
 ```
 
 ## Prerequisites
 
-- A C++17 capable compiler (MSVC 2019+, Clang, or GCC).
-- CMake 3.16 or newer.
+- A C++17 capable compiler.
+- CMake 3.15 or newer.
 - Python is **not** required because the example sticks to core OpenGL calls.
 
-On Linux, install system OpenGL drivers and build tooling (e.g. `build-essential mesa-utils libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev`). On macOS the Xcode command-line tools are sufficient. On Windows, use MSVC via Visual Studio or clang-cl.
+On Linux, install system OpenGL drivers and build tooling (e.g. `sudo apt install build-essential libgl1-mesa-glx libglu1-mesa libglew-dev libglfw3 libglfw3-dev`).
 
 ## Configure & Build
 
 ```bash
-cmake -S . -B build
-cmake --build build
+cd build
+cmake ..
+make
 ```
 
 You can then run the sample application:
 
 ```bash
-./build/swarm_app    # On Windows use build/Debug/swarm_app.exe
+./build/swarm
 ```
 
 The executable copies the `shaders/` directory next to the binary during the build step so you can load them at runtime once you add shader compilation code.

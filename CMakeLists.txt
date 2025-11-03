@@ -1,36 +1,30 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.15)
+project(swarm LANGUAGES CXX)
 
-project(SwarmOpenGL LANGUAGES CXX)
-
+# Use C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# Output binaries into build/bin/
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include(cmake/Dependencies.cmake)
+# Include directories
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_executable(swarm_app
+# Add executable
+add_executable(${PROJECT_NAME}
     src/main.cpp
 )
 
-target_include_directories(swarm_app PRIVATE include)
-
+# Find required packages
 find_package(OpenGL REQUIRED)
-target_link_libraries(swarm_app PRIVATE glfw OpenGL::GL)
+find_package(glfw3 3.3 REQUIRED)
 
-if(APPLE)
-    target_link_libraries(swarm_app PRIVATE "-framework Cocoa" "-framework IOKit" "-framework CoreVideo")
-endif()
-
-add_custom_command(
-    TARGET swarm_app POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory
-            $<TARGET_FILE_DIR:swarm_app>/shaders
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_CURRENT_SOURCE_DIR}/shaders
-            $<TARGET_FILE_DIR:swarm_app>/shaders
-    COMMENT "Copying shader assets to output directory"
+# Link libraries
+target_link_libraries(${PROJECT_NAME}
+    OpenGL::GL
+    glfw
 )
 
-install(TARGETS swarm_app RUNTIME DESTINATION bin)
+# Optional: copy shader resources to build directory
+file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR}/bin)
