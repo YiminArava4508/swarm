@@ -1,0 +1,12 @@
+# Build artifacts
+/build/
+/out/
+/.vs/
+/.idea/
+
+# IDE cruft
+*.user
+*.obj
+*.pdb
+*.o
+*.log
