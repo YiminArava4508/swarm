@@ -8,23 +8,26 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Output binaries into build/bin/
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Include directories
-include_directories(${PROJECT_SOURCE_DIR}/include)
-
-# Add executable
-add_executable(${PROJECT_NAME}
-    src/main.cpp
-)
-
 # Find required packages
 find_package(OpenGL REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
 
-# Link libraries
-target_link_libraries(${PROJECT_NAME}
-    OpenGL::GL
-    glfw
+# Add include directory
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+# Add subdirectory for the Game module
+add_subdirectory(src/game)
+
+# Add main executable
+add_executable(${PROJECT_NAME}
+    src/main.cpp
 )
 
-# Optional: copy shader resources to build directory
+# Link the Game library to the executable
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        Game
+)
+
+# Optional: copy resource files to build/bin
 file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR}/bin)
