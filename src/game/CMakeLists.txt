@@ -11,6 +11,5 @@ target_include_directories(Game PUBLIC
 # Link dependencies used within Game
 target_link_libraries(Game
     PUBLIC
-        OpenGL::GL
-        glfw
+        raylib
 )

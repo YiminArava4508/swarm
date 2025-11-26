@@ -9,14 +9,13 @@ public:
     Game();
     ~Game();
 
-    void Initialize();
     void CreateWindow();
     void Run();
+    void Render();
 
     bool IsRunning() const;
 
 private:
     std::string msTitle;
     bool mbIsRunning;
-    GLFWwindow* mpWindow;    // raw pointer because memory managed by GL
 };

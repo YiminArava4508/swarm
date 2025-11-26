@@ -9,14 +9,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Find required packages
-find_package(OpenGL REQUIRED)
-find_package(glfw3 3.3 REQUIRED)
+# find_package(OpenGL REQUIRED)
+# find_package(glfw3 3.3 REQUIRED)
 
 # Add include directory
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # Add subdirectory for the Game module
 add_subdirectory(src/game)
+add_subdirectory(external/raylib)
 
 # Add main executable
 add_executable(${PROJECT_NAME}
@@ -26,6 +27,7 @@ add_executable(${PROJECT_NAME}
 # Link the Game library to the executable
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
+        raylib
         Game
 )
 

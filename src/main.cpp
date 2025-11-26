@@ -1,18 +1,12 @@
 #include <iostream>
 #include <game/Game.h>
+#include "raylib.h"
 
+// desired game structure for main loop
 int main()
 {
     Game SwarmGame{};
-    SwarmGame.Initialize();
-    SwarmGame.CreateWindow();
-    SwarmGame.Run();
-
-    while(SwarmGame.IsRunning())
-    {
-        // game loop?
-    }
-
+    SwarmGame.Run(); 
     std::cout << "Game terminated." << std::endl;
     return 0;
 }
