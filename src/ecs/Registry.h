@@ -1,8 +1,8 @@
 #pragma once
-#include "Entity.h"
-#include "Movement.h"
-#include "Position.h"
+#include "ecs/Entity.h"
+#include "ecs/components/Components.h"
 #include <unordered_map>
+#include <typeindex>
 #include <vector>
 #include <any>
 
@@ -11,12 +11,14 @@ class Registry
 {
 public:
     Registry();
-    
-    Entity createEntity(EntityType type = EntityType::INVALID);
+    ~Registry();
+
+    void createEntity(EntityType type = EntityType::INVALID);
     void destoryEntity(Entity entity);
-    
+    bool isValidEntity(uint32_t index);
+
     template<typename T>
-    void addComponent(Entity entity, T component);
+    void addComponent(uint32_t entity, T component);
     
     template<typename T>
     T& getComponent(Entity entity);
@@ -30,5 +32,5 @@ public:
 private:
     uint32_t mnNextID = 1;
     std::unordered_map<uint32_t, Entity> mhEntities;
-    std::unordered_map<std::type_info, std::any> mhComponentPool;
+    std::unordered_map<std::type_index, std::any> mhComponentPool;
 };

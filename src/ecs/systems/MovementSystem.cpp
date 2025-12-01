@@ -1,4 +1,3 @@
-#pragma once
 #include "Registry.h"
 #include "components/Movement.h"
 #include "components/Position.h"

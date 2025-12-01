@@ -1,14 +1,14 @@
- #include <iostream>
- #include "Entity.h"
- #include "Game.h"
- #include "Registry.h"
- #include "raylib.h"
+#include "ecs/Registry.h"
+#include "raylib.h"
+#include "Game.h"
+#include <iostream>
+#include <exception>
 
- namespace
- {
-    constexpr int WINDOW_WIDTH {800};
-    constexpr int WINDOW_HEIGHT {450};
- }
+namespace
+{
+    constexpr int WINDOW_WIDTH{800};
+    constexpr int WINDOW_HEIGHT{450};
+}
 
 Game::Game() : msTitle("Swarm"), mbIsRunning(true) {}
 
@@ -20,18 +20,29 @@ void Game::Run()
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, msTitle.c_str());
     SetTargetFPS(60);
 
-    Registry registry;
+    Registry registry{};
     registry.createEntity(EntityType::EXAMPLE);
-    
-    
-    while (!WindowShouldClose()) 
+    std::cout << std::boolalpha << "Entity valid: " << registry.isValidEntity(1) << std::endl;
+
+    std::cout << "Add position and render components to newly created entity" << std::endl;
+    Position entityPos;
+    entityPos.x = WINDOW_WIDTH / 2;
+    entityPos.y = WINDOW_HEIGHT / 2;
+
+    Render entityRender;
+    entityRende while (!WindowShouldClose())
     {
-        // draw entities
+        /*
+        example systems code
+            renderSystem();
+            movementSystem();
+            inputSystem();
+        */
         BeginDrawing();
         ClearBackground(RAYWHITE);
         EndDrawing();
     }
-    
+
     CloseWindow();
     mbIsRunning = false;
 }

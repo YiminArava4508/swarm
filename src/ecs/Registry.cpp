@@ -1,12 +1,14 @@
+#pragma once
 #include "Registry.h"
 #include "Entity.h"
 
-Entity Registry::createEntity(EntityType type)
+Registry::Registry() {}
+Registry::~Registry() {}
+
+void Registry::createEntity(EntityType type)
 {
     Entity entity{mnNextID++, type};
     mhEntities.insert({mnNextID, entity});
-
-    return entity;
 }
 
 void Registry::destoryEntity(Entity entity)
@@ -15,8 +17,13 @@ void Registry::destoryEntity(Entity entity)
     mhEntities.erase(entity.id);
 }
 
+bool Registry::isValidEntity(uint32_t index)
+{
+    return mhEntities.find(index) == mhEntities.end();
+}
+
 template<typename T>
-void Registry::addComponent(Entity entity, T component)
+void Registry::addComponent(uint32_t entity, T component)
 {
     // extract the corresponding component type
     auto& poolAny = mhComponentPool[typeid(T)];
@@ -24,11 +31,11 @@ void Registry::addComponent(Entity entity, T component)
     // if this pool does not exist yet, create it
     if (!poolAny.has_value())
     {
-        poolAny = std::unordered_map<Entity, T>{};
+        poolAny = std::unordered_map<uint32_t, T>{};
     }
 
     // pool behaves as an unordered_map<Entity, T> alias
-    auto& pool = std::any_cast<std::unordered_map<Entity, T>&>(poolAny);
+    auto& pool = std::any_cast<std::unordered_map<uint32_t, T>&>(poolAny);
 
     pool[entity] = component;
 }
@@ -52,7 +59,7 @@ bool Registry::hasComponent(Entity entity)
 
     auto& pool = std::any_cast<std::unordered_map<Entity, T>&>(poolAny);
     
-    return pool.contains(entity)
+    return pool.contains(entity);
 }
 
 template<typename T>
