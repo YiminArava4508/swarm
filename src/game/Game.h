@@ -11,7 +11,7 @@ public:
 
     void CreateWindow();
     void Run();
-    void Render();
+    // void Render();
 
     bool IsRunning() const;
 
